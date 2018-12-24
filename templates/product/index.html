@@ -1,0 +1,290 @@
+{% extends 'product/base.html' %}
+{% load static %}
+{% load imagekit %}
+{% load humanize %}
+{% load extra_filters %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="container">
+            <!-- ADVANCED SEARCH -->
+            <div class="row f_asearch_tdv">
+                <div class="col-lg-9 col-md-8 col-sm-8 col-xs-6 f_l_sr_dv">
+                    <div class="my_shadow">
+                    <div class="f_asearch_tlt_dv">Browse Inventory</div>
+                    <div class="f_asearch_cnt_dv">
+                        <div class="row f_asearch_r_tabs">
+                            <div torder="1" class="col-md-4 col-xs-12 f_asearch_r_tab_clicked">Featured Items</div>
+                            <div torder="2" class="col-md-4 col-xs-12">Vehicle Types</div>
+                            <div torder="3" class="col-md-4 col-xs-12">Makes</div>
+                        </div>
+                        <div class="f_asearch_r_cnts">
+                            <div class="row f_asearch_tab1">
+                                <div class="f_max_1280">
+                                    <div class="col-md-4 col-sd-4 col-xs-12">
+                                        {% for featured_filter in featured_filters|slice:":10" %}
+                                            <a href="{% if 0 == featured_filter.count %}#{% else %}/lots_by_search/?feature={{ featured_filter.id }}{{ status }}{% endif %}">{{ featured_filter.name }} ({{ featured_filter.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-4 col-sd-4 col-xs-12">
+                                        {% for featured_filter in featured_filters|slice:"10:20" %}
+                                            <a href="{% if 0 == featured_filter.count %}#{% else %}/lots_by_search/?feature={{ featured_filter.id }}{{ status }}{% endif %}">{{ featured_filter.name }} ({{ featured_filter.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-4 col-sd-4 col-xs-12">
+                                        {% for featured_filter in featured_filters|slice:"20:" %}
+                                            <a href="{% if 0 == featured_filter.count %}#{% else %}/lots_by_search/?feature={{ featured_filter.id }}{{ status }}{% endif %}">{{ featured_filter.name }} ({{ featured_filter.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="f_min_1280">
+                                    <div class="col-md-3 col-xs-12">
+                                        {% for featured_filter in featured_filters|slice:":7" %}
+                                            <a href="{% if 0 == featured_filter.count %}#{% else %}/lots_by_search/?feature={{ featured_filter.id }}{{ status }}{% endif %}">{{ featured_filter.name }} ({{ featured_filter.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-3 col-xs-12">
+                                        {% for featured_filter in featured_filters|slice:"7:14" %}
+                                            <a href="{% if 0 == featured_filter.count %}#{% else %}/lots_by_search/?feature={{ featured_filter.id }}{{ status }}{% endif %}">{{ featured_filter.name }} ({{ featured_filter.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-3 col-xs-12">
+                                        {% for featured_filter in featured_filters|slice:"14:21" %}
+                                            <a href="{% if 0 == featured_filter.count %}#{% else %}/lots_by_search/?feature={{ featured_filter.id }}{{ status }}{% endif %}">{{ featured_filter.name }} ({{ featured_filter.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-3 col-xs-12">
+                                        {% for featured_filter in featured_filters|slice:"21:" %}
+                                            <a href="{% if 0 == featured_filter.count %}#{% else %}/lots_by_search/?feature={{ featured_filter.id }}{{ status }}{% endif %}">{{ featured_filter.name }} ({{ featured_filter.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row f_asearch_tab2 g_none_dis">
+                                <div class="f_max_1280">
+{#                                    {% for _ in 'xxx' %}#}
+                                        <div class="col-md-4 col-xs-12">
+                                            {% for vehicle_type in vehicle_types %}
+                                                <a href="{% if 0 == vehicle_type.count %}#{% else %}/lots_by_search/?type={{ vehicle_type.name }}{{ status }}{% endif %}">{{ vehicle_type.name|get_type_description }} ({{ vehicle_type.count }})</a>
+                                            {% endfor %}
+                                        </div>
+{#                                    {% endfor %}#}
+                                </div>
+                                <div class="f_min_1280">
+{#                                    {% for _ in 'xxxx' %}#}
+                                        <div class="col-md-3 col-xs-12">
+                                            {% for vehicle_type in vehicle_types %}
+                                                <a href="{% if 0 == vehicle_type.count %}#{% else %}/lots_by_search/?type={{ vehicle_type.name }}{{ status }}{% endif %}">{{ vehicle_type.name|get_type_description }} ({{ vehicle_type.count }})</a>
+                                            {% endfor %}
+                                        </div>
+{#                                    {% endfor %}#}
+                                </div>
+                            </div>
+                            <div class="row f_asearch_tab3 g_none_dis">
+                                <div class="f_max_1280">
+                                    <div class="col-md-4 col-xs-12">
+                                        {% for vehicle_make in vehicle_makes|slice:":14" %}
+                                            <a href="/lots_by_search/?make={{ vehicle_make.name }}{{ status }}">{{ vehicle_make.name }} ({{ vehicle_make.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-4 col-xs-12">
+                                        {% for vehicle_make in vehicle_makes|slice:"14:28" %}
+                                            <a href="/lots_by_search/?make={{ vehicle_make.name }}{{ status }}">{{ vehicle_make.name }} ({{ vehicle_make.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-4 col-xs-12">
+                                        {% for vehicle_make in vehicle_makes|slice:"28:41" %}
+                                            <a href="/lots_by_search/?make={{ vehicle_make.name }}{{ status }}">{{ vehicle_make.name }} ({{ vehicle_make.count }})</a>
+                                        {% endfor %}
+                                        <a href="#">More...</a>
+                                    </div>
+                                </div>
+                                <div class="f_min_1280">
+                                    <div class="col-md-3 col-xs-12">
+                                        {% for vehicle_make in vehicle_makes|slice:":14" %}
+                                            <a href="/lots_by_search/?make={{ vehicle_make.name }}{{ status }}">{{ vehicle_make.name }} ({{ vehicle_make.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-3 col-xs-12">
+                                        {% for vehicle_make in vehicle_makes|slice:"14:28" %}
+                                            <a href="/lots_by_search/?make={{ vehicle_make.name }}{{ status }}">{{ vehicle_make.name }} ({{ vehicle_make.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-3 col-xs-12">
+                                        {% for vehicle_make in vehicle_makes|slice:"28:42" %}
+                                            <a href="/lots_by_search/?make={{ vehicle_make.name }}{{ status }}">{{ vehicle_make.name }} ({{ vehicle_make.count }})</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-3 col-xs-12">
+                                        {% for vehicle_make in vehicle_makes|slice:"42:55" %}
+                                            <a href="/lots_by_search/?make={{ vehicle_make.name }}{{ status }}">{{ vehicle_make.name }} ({{ vehicle_make.count }})</a>
+                                        {% endfor %}
+                                        <a href="#">More...</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 f_l_sr_dv">
+                    <div class="my_shadow">
+                    <div class="f_asearch_tlt_dv">Vehicle Finder</div>
+                    <div class="f_asearch_cnt_dv f_asearch_rr_cnt">
+                        <div class="row f_site_row">
+                            <div class="col-md-4 col-xs-12"></div>
+                            <div class="col-md-8 col-xs-12">
+                                <div class="row c_row">
+                                    <div class="col-sm-4 col-xs-4"><input type="button" value="All"
+                                                                          class="f_asearch_l_btn f_site_copart_btn"/>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-4"><input type="button" value="Copaart"
+                                                                          class="f_asearch_l_btn f_site_copart_btn"/>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-4"><input type="button" value="IAAI"
+                                                                          class="f_asearch_l_btn"/></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12 g_txt_right f_as_rr_label">Types</div>
+                            <div class="col-md-8 col-xs-12">
+                                <select class="g_slt f_r_s_slt" id="finder_types">
+                                    {% for vehicle_type in vehicle_types %}
+                                        <option label="{{ vehicle_type.name|get_type_description }}"
+                                                value="{{ vehicle_type.name }}"
+                                                {% if 'V' == vehicle_type.name %}selected{% endif %}>
+                                            {{ vehicle_type.name|get_type_description }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12 g_txt_right f_as_rr_label">Year</div>
+                            <div class="col-md-8 col-xs-12">
+                                <div class="row c_row">
+                                    <div class="col-sm-5 col-xs-5">
+                                        <select class="g_slt f_as_year_slt f_r_s_slt" id="finder_from_year">
+                                            {% for year in year_range %}
+                                                <option label="{{ year }}" value="{{ year }}" {% if year == 2008 %}selected{% endif %}>{{ year }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-2 g_txt_center">
+                                        To
+                                    </div>
+                                    <div class="col-sm-5 col-xs-5">
+                                        <select class="g_slt f_as_year_slt f_r_s_slt" id="finder_to_year">
+                                            {% for year in year_range %}
+                                                <option label="{{ year }}" value="{{ year }}" {% if year == 2019 %}selected{% endif %}>{{ year }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12 g_txt_right f_as_rr_label">Make</div>
+                            <div class="col-md-8 col-xs-12">
+                                <select class="g_slt f_r_s_slt" id="finder_makes">
+                                    <option value="0">All Makes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12 g_txt_right f_as_rr_label">Model</div>
+                            <div class="col-md-8 col-xs-12">
+                                <select class="g_slt f_r_s_slt" id="finder_models">
+                                    <option value="0">All Models</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12 g_txt_right f_as_rr_label">Location</div>
+                            <div class="col-md-8 col-xs-12">
+                                <!--<input type="radio" name="location" value="1" id="f_as_l_1" checked/> &nbsp; <label for="f_as_l_1">Location</label> <br>
+                                <input type="radio" name="location" value="1" id="f_as_l_2"/> &nbsp; <label for="f_as_l_2">State / Province</label> <br>
+                                <input type="radio" name="location" value="1" id="f_as_l_3" /> &nbsp; <label for="f_as_l_3">Zip / Postal Code</label> <br>-->
+                                <select class="g_slt f_r_s_slt" id="finder_location">
+                                    <option value="0">All Locations</option>
+                                    {% for location in locations %}
+                                        <option label="{{ location.location }}" value="{{ location.location }}">{{ location.location }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12"></div>
+                            <div class="col-md-8 col-xs-12 g_txt_right">
+                                <input type="button" class="f_asearch_l_btn" id="f_search_finder_btn" value="Search"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- NEW ARRIVALS -->
+            <div class="f_new_arrivals">
+                <div class="f_asearch_tlt_dv">New Arrivals</div>
+                <div class="row f_new_arrival_cnts">
+                    {% for lot in arrivals|slice:":4" %}
+                        <div class="col-lg-3 col-md-6 col-xs-12">
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="{{ lot|get_lot_image:0 }}" class="img-responsive" alt="{{ lot.name }}">
+                                </div>
+                                <div class="f_pi_detail">
+                                    <h3><a href="{% url 'detail_page' lot.lot %}" class="g_txt_bold">{{ lot.name }}</a></h3>
+                                    <div class="pi-price">${{ lot.retail_value|intcomma }} {{ lot.currency }}</div>
+                                    <a href="{% url 'detail_page' lot.lot %}" class="btn btn-default add2cart">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row f_new_arrival_cnts f_land_hide_arrival g_none_dis">
+                    {% for lot in arrivals|slice:"4:8" %}
+                        <div class="col-lg-3 col-md-6 col-xs-12">
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="{{ lot|get_lot_image:0 }}" class="img-responsive" alt="{{ lot.name }}">
+                                </div>
+                                <div class="f_pi_detail">
+                                    <h3><a href="{% url 'detail_page' lot.lot %}" class="g_txt_bold">{{ lot.name }}</a></h3>
+                                    <div class="pi-price">${{ lot.retail_value|intcomma }} {{ lot.currency }}</div>
+                                    <a href="{% url 'detail_page' lot.lot %}" class="btn btn-default add2cart">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row f_new_arrival_cnts f_land_hide_arrival g_none_dis">
+                    {% for lot in arrivals|slice:"8:" %}
+                        <div class="col-lg-3 col-md-6 col-xs-12">
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="{{ lot|get_lot_image:0 }}" class="img-responsive" alt="{{ lot.name }}">
+                                </div>
+                                <div class="f_pi_detail">
+                                    <h3><a href="{% url 'detail_page' lot.lot %}" class="g_txt_bold">{{ lot.name }}</a></h3>
+                                    <div class="pi-price">${{ lot.retail_value|intcomma }} {{ lot.currency }}</div>
+                                    <a href="{% url 'detail_page' lot.lot %}" class="btn btn-default add2cart">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="f_arrival_extend_div">
+                    <img src="{% static 'product/custom/imgs/down.png' %}" state="0" class="f_arrival_extend_img"/>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'product/custom/js/home.js' %}" type="text/javascript"></script>
+{% endblock %}

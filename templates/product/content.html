@@ -1,0 +1,269 @@
+{% load static %}
+{% load humanize %}
+{% load extra_filters %}
+
+<script>
+    let applied_filter_source = "{{ applied_filter_source|safe }}";
+    let applied_sold = "{{ applied_sold|safe }}";
+    let all_features_for_filter = {{ features|safe }};
+    let applied_filter_features = {{ applied_filter_features|safe }};
+    let all_makes_for_filter = {{ makes|safe }};
+    let applied_filter_makes = {{ applied_filter_makes|safe }};
+    let all_models_for_filter = {{ models|safe }};
+    let applied_filter_models = {{ applied_filter_models|safe }};
+    let all_years_for_filter = {{ years|safe }};
+    let applied_filter_years = {{ applied_filter_years|safe }};
+    let all_odometers_for_filter = {{ odometers|safe }};
+    let applied_filter_odometers = {{ applied_filter_odometers|safe }};
+    let all_locations_for_filter = {{ locations|safe }};
+    let applied_filter_locations = {{ applied_filter_locations|safe }};
+</script>
+<div class="main" id="f_lr_main_dv">
+    <div class="container">
+        <div class="row f_asearch_tdv">
+            <div class="f_list_filter_dv">
+                <div class="f_asearch_tlt_dv" id="filter">Filters <i
+                        class="material-icons f_list_left_filter_min_i">line_weight</i></div>
+                <div class="f_asearch_cnt_dv f_list_filter_cnt Check">
+                    <div>
+                        <div class="f_l_f_tlt"><i class="fa fa-fw{% if 'Sites' in status %} fa-minus-square{% else %} fa-plus-square{% endif %}"></i>Sites</div>
+                        <div class="f_l_f_cnt{% if 'Sites' not in status %} g_none_dis{% endif %}">
+                            <input type="radio" class="f_list_filter_site" name="f_list_filter_site" id="flfc10"{% if '' == applied_filter_source %} checked{% endif %}/><label for="flfc10">&nbsp;All</label><br>
+                            <input type="radio" class="f_list_filter_site" name="f_list_filter_site" id="flfc11"{% if 'copart' == applied_filter_source %} checked{% endif %}/><label for="flfc11">&nbsp;Copart ({{ copart_count }})</label><br>
+                            <input type="radio" class="f_list_filter_site" name="f_list_filter_site" id="flfc12"{% if 'iaai' == applied_filter_source %} checked{% endif %}/><label for="flfc12">&nbsp;IAAI ({{ iaai_count }})</label><br>
+                        </div>
+
+                        <div class="f_l_f_tlt"><i class="fa fa-fw{% if 'Already Sold' in status %} fa-minus-square{% else %} fa-plus-square{% endif %}"></i>Already Sold</div>
+                        <div class="f_l_f_cnt{% if 'Already Sold' not in status %} g_none_dis{% endif %}">
+                            <input type="checkbox" name="f_list_filter_sold" id="flfc100"{% if 'yes' == applied_sold %} checked{% endif %}/>
+                            <label for="flfc100">&nbsp;Show Real Price ({{ sold_count }})</label>
+                            <br>
+                        </div>
+
+                        <div class="f_l_f_tlt"><i class="fa fa-fw{% if 'Featured Items' in status %} fa-minus-square{% else %} fa-plus-square{% endif %}"></i>Featured Items</div>
+                        <div class="f_l_f_cnt{% if 'Featured Items' not in status %} g_none_dis{% endif %}">
+                            <input id="input_filter_featured" class="g_ipt" placeholder="Search"/>
+                            <div id="div_filter_featured" class="f_l_f_sub">
+                                {% for feature in features %}
+                                    <input type="checkbox" id="id_featured_{{ feature.feature }}" class="checkbox_featured"{% if feature.feature in applied_filter_features %} checked{% endif %}/>
+                                    <label for="id_featured_{{ feature.feature }}">{{ feature.feature }} ({{ feature.count }})</label> <br>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="f_l_f_tlt"><i class="fa fa-fw{% if 'Make' in status %} fa-minus-square{% else %} fa-plus-square{% endif %}"></i>Make</div>
+                        <div class="f_l_f_cnt{% if 'Make' not in status %} g_none_dis{% endif %}">
+                            <input id="input_filter_make" class="g_ipt" placeholder="Search"/>
+                            <div id="div_filter_make" class="f_l_f_sub">
+                                {% for make in makes|slice:":10" %}
+                                    <input type="checkbox" id="id_make_{{ make.make }}" class="checkbox_make"{% if make.make in applied_filter_makes %} checked{% endif %}/>
+                                    <label for="id_make_{{ make.make }}">{{ make.make }} ({{ make.count }})</label> <br>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="f_l_f_tlt"><i class="fa fa-fw{% if 'Model' in status %} fa-minus-square{% else %} fa-plus-square{% endif %}"></i>Model</div>
+                        <div class="f_l_f_cnt{% if 'Model' not in status %} g_none_dis{% endif %}">
+                            <input id="input_filter_model" class="g_ipt" placeholder="Search"/>
+                            <div id="div_filter_model" class="f_l_f_sub">
+                                {% for model in models|slice:":10" %}
+                                    <input type="checkbox" id="id_model_{{ model.model }}" class="checkbox_model"{% if model.model in applied_filter_models %} checked{% endif %}/>
+                                    <label for="id_model_{{ model.model }}">{{ model.model }} ({{ model.count }})</label> <br>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="f_l_f_tlt"><i class="fa fa-fw{% if 'Year' in status %} fa-minus-square{% else %} fa-plus-square{% endif %}"></i>Year</div>
+                        <div class="f_l_f_cnt{% if 'Year' not in status %} g_none_dis{% endif %}">
+                            <input id="input_filter_year" class="g_ipt" placeholder="Search"/>
+                            <div id="div_filter_year" class="f_l_f_sub">
+                                {% for year in years|slice:":10" %}
+                                    <input type="checkbox" id="id_year_{{ year.year }}" class="checkbox_year"{% if year.year|stringformat:"i" in applied_filter_years %} checked{% endif %}/>
+                                    <label for="id_year_{{ year.year }}">{{ year.year }} ({{ year.count }})</label> <br>
+                                {% endfor %}
+                            </div>
+                        </div>
+{#                            <div class="f_l_f_tlt"><i class="fa fa-fw{% if 'Odometer' in status %} fa-minus-square{% else %} fa-plus-square{% endif %}"></i>Odometer</div>#}
+{#                            <div class="f_l_f_cnt{% if 'Odometer' not in status %} g_none_dis{% endif %}">#}
+{#                                <input id="input_filter_odometer" class="g_ipt" placeholder="Search"/>#}
+{#                                <div id="div_filter_odometer" class="f_l_f_sub">#}
+{#                                    {% for odometer in odometers %}#}
+{#                                        <input type="checkbox" id="id_odometer_{{ odometer.odometer }}" class="checkbox_odometer"{% if odometer.odometer in applied_filter_odometers %} checked{% endif %}/>#}
+{#                                        <label for="id_odometer_{{ odometer.odometer }}">{{ odometer.odometer }} ({{ odometer.count }})</label> <br>#}
+{#                                    {% endfor %}#}
+{#                                </div>#}
+{#                            </div>#}
+                        <div class="f_l_f_tlt"><i class="fa fa-fw{% if 'Location' in status %} fa-minus-square{% else %} fa-plus-square{% endif %}"></i>Location</div>
+                        <div class="f_l_f_cnt{% if 'Location' not in status %} g_none_dis{% endif %}">
+                            <input id="input_filter_location" class="g_ipt" placeholder="Search"/>
+                            <div id="div_filter_location" class="f_l_f_sub">
+                                {% for location in locations|slice:":10" %}
+                                    <input type="checkbox" id="id_location_{{ location.location }}" class="checkbox_location"{% if location.location in applied_filter_locations %} checked{% endif %}/>
+                                    <label for="id_location_{{ location.location }}">{{ location.location }} ({{ location.count }})</label> <br>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="f_list_search_result_cnt_dv">
+                <div class="f_asearch_tlt_dv">Search results for: {{ filter_word }}</div>
+                <div class="f_list_cnt_tdv">
+                    <div class="f_l_c_filter_applied">
+                        Filters Applied:
+                        <div id="id_filters_applied">
+                            {% if applied_filter_features %}
+                                {% for applied_filter_feature in applied_filter_features %}
+                                    <div id="id_filter_featured_{{ applied_filter_feature }}" class="f_l_f_a_item filter_featured">{{ applied_filter_feature }}<img class="f_list_fr_close" src="{% static 'product/custom/imgs/close.png' %}"/></div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if applied_filter_makes %}
+                                {% for applied_filter_make in applied_filter_makes %}
+                                    <div id="id_filter_make_{{ applied_filter_make }}" class="f_l_f_a_item filter_make">{{ applied_filter_make }}<img class="f_list_fr_close" src="{% static 'product/custom/imgs/close.png' %}"/></div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if applied_filter_models %}
+                                {% for applied_filter in applied_filter_models %}
+                                    <div id="id_filter_model_{{ applied_filter }}" class="f_l_f_a_item filter_model">{{ applied_filter }}<img class="f_list_fr_close" src="{% static 'product/custom/imgs/close.png' %}"/></div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if applied_filter_years %}
+                                {% for applied_filter in applied_filter_years %}
+                                    <div id="id_filter_year_{{ applied_filter }}" class="f_l_f_a_item filter_year">{{ applied_filter }}<img class="f_list_fr_close" src="{% static 'product/custom/imgs/close.png' %}"/></div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if applied_filter_odometers %}
+                                {% for applied_filter in applied_filter_odometers %}
+                                    <div id="id_filter_odometer_{{ applied_filter }}" class="f_l_f_a_item filter_odometer">{{ applied_filter }}<img class="f_list_fr_close" src="{% static 'product/custom/imgs/close.png' %}"/></div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if applied_filter_locations %}
+                                {% for applied_filter in applied_filter_locations %}
+                                    <div id="id_filter_location_{{ applied_filter }}" class="f_l_f_a_item filter_location">{{ applied_filter }}<img class="f_list_fr_close" src="{% static 'product/custom/imgs/close.png' %}"/></div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if applied_filter_features or applied_filter_makes or applied_filter_models or applied_filter_years or applied_filter_odometers or applied_filter_locations %}
+                            {% else %}
+                                No Filters Applied
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="f_search_result_tb_top">
+                        <div class="row f_r_r_tb_top_top">
+                            <div class="col-md-6 col-xs-5 f_l_s_f_sp">Showing {{ page_start_index }} to {{ page_end_index }}
+                                <span class="f_list_page_num">of {{ total_lots }} entries</span>
+                            </div>
+{#                                <div class="col-md-6 col-xs-7 f_l_s_f_sp g_txt_right">Search :#}
+{#                                    <input class="f_f_r_t_search_ipt" placeholder=" By Lot or VIN"/>#}
+{#                                </div>#}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-5 f_l_s_f_sp">Show
+                                <select class="f_f_r_t_scnt_slt">
+                                    <option value="20"{% if current_entry == 20 %} selected{% endif %}>20</option>
+                                    <option value="50"{% if current_entry == 50 %} selected{% endif %}>50</option>
+                                    <option value="100"{% if current_entry == 100 %} selected{% endif %}>100</option>
+                                </select><span class="f_list_page_num"> entries</span>
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-7 f_l_s_f_sp g_txt_right f_f_r_pagin_btns">
+                                {% for page in pages %}
+                                    <div class="{% if current_page == page %}f_paging_active {% endif %}f_list_page_num">
+                                        <a href="javascript: void(0);" page="{% get_page_url page current_page pages %}"
+                                           class="{% check_page_url page current_page pages %}">{{ page }}</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="f_l_filer_tb_dv">
+                        <table id="c_seach_tb" class="table table-striped table-bordered dt-responsive"
+                               style="width:100%">
+                            <thead>
+                            <tr class="h">
+                                <th class="h">Images</th>
+                                <th class="h">Year</th>
+                                <th class="h">Make</th>
+                                <th class="h">Model</th>
+                                <th class="h">Location</th>
+                                <th class="h">Sale Date</th>
+                                <th class="h">Odometer</th>
+                                <th class="h">Doc Type</th>
+                                <th class="h">Damage</th>
+                                <th class="h">Retail Value</th>
+                                <th class="h">Current Bid</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for lot in lots %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'detail_page' lot.lot %}" target="_blank">
+                                            <img src="{{ lot.avatar }}" class="f_l_f_product_img"/>
+                                            <div class="f_lr_td_img_dv">View All Photos</div>
+                                        </a>
+                                    </td>
+                                    <td>{{ lot.year }}<br>
+                                        {% if lot.lot_highlights|is_icon %}
+                                            {% for icon in lot.lot_highlights %}
+                                                <div class="f_l_y_s f_l_s{{ icon|lower }}">{{ icon }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ lot.make|safe }}</td>
+                                    <td>{{ lot.model }}</td>
+{#                                        <td>NY-LNG ISLAND <br> SF002</td>#}
+                                    <td>{{ lot.location }}</td>
+{#                                        <td>09/12/2018<br>08:00pm OMST</td>#}
+                                    <td>{{ lot.sale_date }}</td>
+{#                                        <td>260, 216 E</td>#}
+                                    <td>{{ lot.odometer_orr|intcomma }}</td>
+                                    <td>{{ lot.doc_type_ts }} - {{ lot.doc_type_stt }}</td>
+                                    <td>{{ lot.lot_1st_damage }}</td>
+                                    <td>${{ lot.retail_value|intcomma }} {{ lot.currency }}</td>
+                                    <td>${{ lot.current_bid|intcomma }} {{ lot.currency }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row f_r_r_tb_top_top">
+                        <div class="col-md-6 col-xs-5 f_l_s_f_sp">Showing {{ page_start_index }} to {{ page_end_index }}
+                            <span class="f_list_page_num">of {{ total_lots }} entries</span>
+                        </div>
+{#                            <div class="col-md-6 col-xs-7 f_l_s_f_sp g_txt_right">Search :#}
+{#                                <input class="f_f_r_t_search_ipt" placeholder=" By Lot or VIN"/>#}
+{#                            </div>#}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-5 f_l_s_f_sp">Show
+                            <select class="f_f_r_t_scnt_slt">
+                                <option value="20"{% if current_entry == 20 %} selected{% endif %}>20</option>
+                                <option value="50"{% if current_entry == 50 %} selected{% endif %}>50</option>
+                                <option value="100"{% if current_entry == 100 %} selected{% endif %}>100</option>
+                            </select><span class="f_list_page_num"> entries</span>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-7 f_l_s_f_sp g_txt_right f_f_r_pagin_btns">
+                            {% for page in pages %}
+                                <div class="{% if current_page == page %}f_paging_active {% endif %}f_list_page_num">
+                                    <a href="javascript: void(0);" page="{% get_page_url page current_page pages %}"
+                                       class="{% check_page_url page current_page pages %}">{{ page }}</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 g_txt_center f_f_r_t_goto_dv">
+                            Go To Page
+                            <input class="f_f_r_t_goto_ipt"/>
+                            <img class="f_lr_goto_page_img" src="{% static 'product/custom/imgs/goto.png' %} "/>
+                        </div>
+                    </div>
+                    <div class="row f_lr_back_top">
+                        <div class="col-md-12 col-xs-12 g_txt_center f_list_goto_top_dv">
+                            <img src="{% static 'product/custom/imgs/back_top.png' %} "/> &nbsp; Top
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="f_list_page_mark" value="1"/>

@@ -1,0 +1,15 @@
+# PyCharm
+.idea
+
+### Python template
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+*.sqlite3
+*/migrations/0*
+
+media
+node_modules

@@ -1,0 +1,96 @@
+version: '2'
+
+services:
+#  chrome:
+#    image: selenium/node-chrome:3.14.0-europium
+#    volumes:
+#      - /dev/shm:/dev/shm
+#    depends_on:
+#      - hub
+#    environment:
+#      HUB_HOST: hub
+#
+#  hub:
+#    image: selenium/hub:3.14.0-europium
+#    ports:
+#      - "4444:4444"
+
+  db:
+    image: postgres:10
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+
+  web:
+    build: .
+    restart: unless-stopped
+    command: |
+      sh -c "
+        python3 manage.py makemigrations &&
+        python3 manage.py migrate &&
+        python3 manage.py loaddata copart/fixtures/vehiclemakes.json &&
+        python3 manage.py loaddata copart/fixtures/user.json &&
+        python3 manage.py collectstatic --noinput &&
+        python3 manage.py runserver 0.0.0.0:80
+      "
+    volumes:
+      - .:/code
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+      - redis
+
+#  celery-worker-h:
+#    build: .
+#    command: celery -A copart worker --concurrency 11 --loglevel=INFO -n worker.high -Q high
+#    restart: unless-stopped
+#    volumes:
+#      - .:/code
+#    depends_on:
+#      - db
+#      - redis
+#
+#  celery-worker-n:
+#    build: .
+#    command: celery -A copart worker --concurrency 1 --loglevel=INFO -n worker.normal -Q normal
+#    restart: unless-stopped
+#    volumes:
+#      - .:/code
+#    depends_on:
+#      - db
+#      - redis
+#
+#  celery-worker-l:
+#    build: .
+#    command: celery -A copart worker --concurrency 1 --loglevel=INFO -n worker.low -Q low
+#    restart: unless-stopped
+#    volumes:
+#      - .:/code
+#    depends_on:
+#      - db
+#      - redis
+#
+#  celery-beat:
+#    build: .
+#    command: celery -A copart beat --loglevel=INFO
+#    restart: unless-stopped
+#    volumes:
+#      - .:/code
+#    depends_on:
+#      - db
+#      - redis
+
+volumes:
+  postgres_data:
+  redis_data:

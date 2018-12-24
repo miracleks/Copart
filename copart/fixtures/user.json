@@ -1,0 +1,20 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$100000$jpM9W0kynJv6$ZvbckW/0xjYHsNysHWyUlKwzx3pVX7lENRMDx48D/M8=",
+    "last_login": "2018-08-26T08:20:33.414Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "ZA",
+    "last_name": "ZA",
+    "email": "zaza316614@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2018-08-20T08:50:52.854Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]

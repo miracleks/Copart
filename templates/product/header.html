@@ -1,0 +1,25 @@
+{% load static %}
+<div class="header f_header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-xs-12">
+                <a class="site-logo" href="{% url 'index_page' %}"><img src="{% static 'product/custom/imgs/logo.png' %}"></a>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="f_search_dv">
+                    <input class="f_search_ipt" placeholder="Search by VIN or Lot" />
+                    <input type="button" class="f_search_btn" id="f_global_search_btn" value="SEARCH" />
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-12">
+                <div class="top-cart-block f_sign_dv">
+                    <ul class="list-unstyled list-inline pull-right">
+                        <li><a href="javascript:void(0);" data-toggle="modal" data-target="#f_refer_a_friend">Refer a Friend</a></li>
+                        <li><a href="{% url 'index_page' %}">Sign In</a></li>
+                        <li><a href="{% url 'index_page' %}">Join Free</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

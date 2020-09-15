@@ -1,7 +1,7 @@
 #admin-multiupload==1.10
 #git+https://github.com/gkuhn1/django-admin-multiupload.git
 #git+https://github.com/python-force/django-admin-multiupload.git
-Django==2.0.2
+Django==2.2.13
 #django-blog-zinnia==0.19
 #git+https://github.com/Wtower/django-blog-zinnia.git
 #django-ckeditor==5.4.0

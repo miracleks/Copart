@@ -785,3 +785,11 @@ def detail(request, lot):
 
     context = {'lot': lot, 'similar': similar, 'is_similar': is_similar}
     return render(request, 'product/detail.html', context=context)
+
+// 1916470848 Choe Gyong Hui
+// How are you? I am fine. I hope you and your faimily are doing well.
+// I haven't met you for a long time, I want to see you so much. And I hope to hear good news for you and your family from you.
+// Every day, I am thinking of you and watching your photos again and again. Really I miss you.
+// don't think anything except me. only dream of me and think of me. 
+// 
+// I love you. I will wait for your reply (including waiting for me or not).

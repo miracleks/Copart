@@ -21,7 +21,7 @@ pytz==2018.3
 Unipath==1.1
 selenium
 django-celery-beat
-websockets==5.0
+websockets==9.1
 requests
 lxml
 #mysql-connector-python

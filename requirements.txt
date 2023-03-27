@@ -28,6 +28,6 @@ lxml
 #mysqlclient
 psycopg2
 psycopg2-binary
-redis==2.10.6
+redis==4.5.3
 whitenoise
 pillow
